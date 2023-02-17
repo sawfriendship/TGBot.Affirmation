@@ -34,7 +34,7 @@ jobs:
         run: |
           pwd
           systemctl stop bot.affirmation.service
-          cp -R /TGBot.Affirmation /var/www/affirmation.bot.saw-friendship.ru/
+          cp -R TGBot.Affirmation/ /var/www/affirmation.bot.saw-friendship.ru/
           cd /var/www/affirmation.bot.saw-friendship.ru/
           pwd
           source venv/bin/activate && python3 -m pip freeze > requirements.txt
