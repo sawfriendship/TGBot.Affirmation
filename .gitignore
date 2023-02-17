@@ -1,0 +1,6 @@
+.vs
+*.bak
+venv
+json.conf
+cert.pem
+private.key

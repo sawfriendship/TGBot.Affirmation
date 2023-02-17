@@ -32,7 +32,13 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
+          pwd
+          systemctl stop bot.affirmation.service
           cp -R $(pwd) /var/www/affirmation.bot.saw-friendship.ru/
+          cd /var/www/affirmation.bot.saw-friendship.ru/
+          pwd
+          ls -lahR
+          source venv/bin/activate && python3 -m pip freeze > requirements.txt
           systemctl restart bot.affirmation.service
           systemctl status bot.affirmation.service
 
