@@ -32,11 +32,11 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-          ls -lahR
-          cal
-          date
+          cp -R $(pwd) /var/www/affirmation.bot.saw-friendship.ru/
+          systemctl restart bot.affirmation.service
+          systemctl status bot.affirmation.service
+
+
           
           
           
