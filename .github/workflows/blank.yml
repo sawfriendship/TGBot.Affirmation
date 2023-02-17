@@ -33,12 +33,12 @@ jobs:
       - name: Run a multi-line script
         run: |
           pwd
-          systemctl restart bot.affirmation.service
+          sudo systemctl restart bot.affirmation.service
           cp -R $(pwd)/ /var/www/affirmation.bot.saw-friendship.ru
           cd /var/www/affirmation.bot.saw-friendship.ru/
           source venv/bin/activate && python3 -m pip freeze > requirements.txt
-          systemctl restart bot.affirmation.service
-          systemctl status bot.affirmation.service
+          sudo systemctl restart bot.affirmation.service
+          sudo systemctl status bot.affirmation.service
 
 
           
