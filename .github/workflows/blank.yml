@@ -34,6 +34,7 @@ jobs:
         run: |
           sudo systemctl stop TGBot.Affirmation
           cp -R $(pwd) /var/www/
+          sudo chown -R www-data:www-data /var/www/TGBot.Affirmation/
           cd /var/www/TGBot.Affirmation/
           source venv/bin/activate && python3.10 -m pip install -r requirements.txt && sudo systemctl restart TGBot.Affirmation && echo "Python is reloaded"
           sudo systemctl status TGBot.Affirmation
