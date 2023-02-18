@@ -1,7 +1,4 @@
 from flask import Flask, escape, request, jsonify
-import pytgbot
-from teleflask import Teleflask
-from teleflask.messages import TextMessage
 import os, requests, json
 import datetime as dt
 
