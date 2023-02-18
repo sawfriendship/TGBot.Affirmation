@@ -11,5 +11,5 @@ app = Flask(__name__)
 
 @app.get('/')
 def index():
-    return 'TEST!!!'
+    return 'TEST 1'
 
