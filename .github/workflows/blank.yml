@@ -37,7 +37,8 @@ jobs:
           sudo systemctl stop bot.affirmation.service
           cp -R $(pwd)/* /var/www/affirmation.bot.saw-friendship.ru
           cd /var/www/affirmation.bot.saw-friendship.ru/
-          source venv/bin/activate && python3 -m pip freeze > requirements.txt
+          # source venv/bin/activate && venv/bin/python3.10 -m pip install -r requirements.txt
+          source venv/bin/activate && python3.10 -m pip install -r requirements.txt
           sudo systemctl restart bot.affirmation.service
           sudo systemctl status bot.affirmation.service
 
