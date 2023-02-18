@@ -27,19 +27,16 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world!
+        run: pwd & systemctl status TGBot.Affirmation
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          pwd
-          sudo systemctl status bot.affirmation.service
-          sudo systemctl stop bot.affirmation.service
-          cp -R $(pwd)/* /var/www/affirmation.bot.saw-friendship.ru
-          cd /var/www/affirmation.bot.saw-friendship.ru/
-          source venv/bin/activate && python3.10 -m pip install -r requirements.txt
-          sudo systemctl restart bot.affirmation.service
-          sudo systemctl status bot.affirmation.service
+          sudo systemctl stop TGBot.Affirmation
+          cp -R $(pwd) /var/www/
+          cd /var/www/TGBot.Affirmation/
+          source venv/bin/activate && python3.10 -m pip install -r requirements.txt && sudo systemctl restart TGBot.Affirmation && echo "Python is reloaded"
+          sudo systemctl status TGBot.Affirmation
           sudo systemctl status nginx.service
 
 
