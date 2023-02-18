@@ -11,5 +11,5 @@ app = Flask(__name__)
 
 @app.get('/')
 def index():
-    return 'TEST 1'
+    return 'TEST 3'
 
