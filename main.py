@@ -9,7 +9,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 Base = sql_orm.declarative_base()
 locale.setlocale(locale.LC_ALL, 'rus_rus')
 from pprint import pprint
-
+# test
 with open('conf.json','r') as f:
     CONFIG = json.load(f)
 
