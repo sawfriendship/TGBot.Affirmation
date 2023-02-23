@@ -1,0 +1,9 @@
+venv
+conf.json
+__pycache__
+.vscode
+*.bak
+*.zip
+*.ipynb
+cert.pem
+private.key
