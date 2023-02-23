@@ -18,7 +18,6 @@ LOCALE = CONFIG.get('LOCALE')
 DB = CONFIG.get('DB')
 DB_ENGINE = sql.create_engine(DB)
 
-print(f"{WEBHOOK}/{SECRET}")
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 locale.setlocale(locale.LC_ALL, LOCALE)
 Base = sql_orm.declarative_base()
@@ -42,14 +41,27 @@ class Request(Base):
             'text': self.text,
         }
         return str(result)
+    
+    def as_dict(self):
+        result = {
+            'id': self.id,
+            'ts': self.ts.isoformat(),
+            'username': self.username,
+            'chat_id': self.chat_id,
+            'message_id': self.message_id,
+            'text': self.text,
+        }
+        return result
 
 @app.route('/')
 async def index():
     return 'ok'
 
-@app.route(f"/{SECRET}", methods=['GET','POST'])
+@app.route('/', methods=['GET','POST'])
 async def webhook():
     if request.method.upper() != 'POST': return 'ok'
+    SECRET_HEADER = request.headers.get('X-Telegram-Bot-Api-Secret-Token','')
+    if SECRET_HEADER != SECRET: return jsonify({'error':'Incorrect Token'}), 403
     if not (j := request.get_json(force=True)) or not (isinstance(j,dict)) or not (message := j.get('message')): return 'BadJSON'
     pprint(j)
     bot = telegram.Bot(token=TOKEN)
@@ -84,8 +96,8 @@ async def webhook():
 
     return 'ok'
 
-@app.get(f"/{SECRET}/getWebhook")
-@app.get(f"/{SECRET}/getWebhookInfo")
+@app.get('/getWebhook')
+@app.get('/getWebhookInfo')
 async def getWebhookInfo():
     try:
         responce = requests.get(url=f"{API_URL}/getWebhookInfo")
@@ -93,19 +105,25 @@ async def getWebhookInfo():
         return jsonify({'error':str(e)})
     else:
         if responce.status_code != 200:
-            return jsonify({'status_code':responce.status_code})
+            return jsonify({'error':f"status_code: {responce.status_code}"})
         else:
             return jsonify(responce.json())
 
-@app.get(f"/{SECRET}/setWebhook")
+@app.get('/setWebhook')
 async def setWebhook():
+    pending_update_count = int(request.args.get('pending_update_count','0'))
     try:
         with open('cert.pem','rb') as f: cert_file_bytes = f.read()
     except Exception as e:
         return jsonify({'error':str(e)})
     else:
         try:
-            responce = requests.post(url=f"{API_URL}/setWebhook",data={'url':f"{WEBHOOK}/{SECRET}"}, files={'certificate': cert_file_bytes})
+            data = dict(
+                url = WEBHOOK,
+                pending_update_count = pending_update_count,
+                secret_token = SECRET
+            )
+            responce = requests.post(url=f"{API_URL}/setWebhook",data=data, files={'certificate': cert_file_bytes})
         except Exception as e:
             return jsonify({'error':str(e)})
         else:
