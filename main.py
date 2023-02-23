@@ -5,11 +5,8 @@ import datetime as dt
 import sqlalchemy as sql
 import sqlalchemy.types as sql_type
 import sqlalchemy.orm as sql_orm
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-Base = sql_orm.declarative_base()
-locale.setlocale(locale.LC_ALL, 'rus_rus')
 from pprint import pprint
-# test
+
 with open('conf.json','r') as f:
     CONFIG = json.load(f)
 
@@ -17,10 +14,14 @@ TOKEN = CONFIG.get('TOKEN')
 SECRET = CONFIG.get('SECRET')
 WEBHOOK = CONFIG.get('WEBHOOK')
 API_URL = f"https://api.telegram.org/bot{TOKEN}"
+LOCALE = CONFIG.get('LOCALE')
 DB = CONFIG.get('DB')
 DB_ENGINE = sql.create_engine(DB)
 
 print(f"{WEBHOOK}/{SECRET}")
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+locale.setlocale(locale.LC_ALL, LOCALE)
+Base = sql_orm.declarative_base()
 
 app = Flask(__name__)
 

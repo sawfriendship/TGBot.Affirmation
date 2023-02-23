@@ -1,5 +1,7 @@
 {
     "TOKEN": "",
     "SECRET": "",
-    "WEBHOOK": ""
+    "WEBHOOK": "",
+    "DB": "postgresql+psycopg2://user:pass@host/database",
+    "LOCALE": "ru_RU.UTF-8"
 }
