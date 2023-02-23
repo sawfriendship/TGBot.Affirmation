@@ -55,7 +55,7 @@ async def webhook():
 
     request_text = message.get('text','').lower()
 
-    kb = telegram.ReplyKeyboardMarkup([['Yes','No','HZ','Да','Нет']], one_time_keyboard=True, resize_keyboard=True)
+    kb = telegram.ReplyKeyboardMarkup([['Yes','No','HZ']], one_time_keyboard=True, resize_keyboard=True)
 
     chat_id = message['chat']['id']
     username = message['chat']['username']
